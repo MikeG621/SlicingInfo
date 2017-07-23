@@ -1,0 +1,13 @@
+3 - enabled? firing?
+1/33
+0
+0/1/2/3/4/5 - targeting/craft type
+28/40/69/100/135/152/162/168/194/244
+1/2/3/12/35
+0/88/125/132/150/175
+0/2/3/125
+0x10
+67/131 - craft/(weapon/space obj)
+slot profile number -1
+Spec*.lst file number -1
+Spec.lst OPT number -1

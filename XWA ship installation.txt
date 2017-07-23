@@ -1,0 +1,10 @@
+XWA ship installation
+
+-=done by line, cannot patch=-
+SHIPLIST.TXT - !SPECIES_***!*NAME*,shiptype,(Non)Flyable,Known,Skirmish (4 tabs or so) ; copy line of numbers from similar ship
+FLIGHTMODELS\SPACECRAFT0.LST - FlightModels\*.opt  ; add blanks as needed?
+SPECDESC.TXT - Tech info
+STRINGS.TXT - ships name and plural form
+
+-=Patch=-
+XWINGALLIANCE.EXE

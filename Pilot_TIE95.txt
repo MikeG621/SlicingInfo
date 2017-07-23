@@ -1,0 +1,157 @@
+=====
+TFR Overview
+
+The Pilot Files for TIE95 use the .TFR extension and have a fixed filesize of
+0xF10.  TIE has the capability to auto-save the pilot file before each mission
+should something happen or if the pilot wishes to retry a mission after leaving
+the debrief corridor.  Being an early platform, there are few anti-cheating
+measures that can be employed to ensure the validity of the file.
+
+=====
+TFR Structure
+
+0x001	BYTE	PILOT_STATUS
+0x002	BYTE	PILOT_RANK
+0x003	BYTE	PILOT_DIFFICULTY
+0x004	INT	SCORE
+0x008	SHORT	SKILL_SCORE
+0x00A	BYTE	SECRET_ORDER
+0x02A	INT	T/F_TRAIN_SCORE
+0x02E	INT	T/I_TRAIN_SCORE
+0x032	INT	T/B_TRAIN_SCORE
+0x036	INT	T/A_TRAIN_SCORE
+0x03A	INT	GUN_TRAIN_SCORE
+0x03E	INT	T/D_TRAIN_SCORE
+0x042	INT	MIS_TRAIN_SCORE
+0x046	INT	UNUSED1_TRAIN_SCORE
+0x04A	INT	UNUSED2_TRAIN_SCORE
+0x04E	INT	UNUSED3_TRAIN_SCORE
+0x052	INT	UNUSED4_TRAIN_SCORE
+0x056	INT	UNUSED5_TRAIN_SCORE
+0x05A	BYTE	T/F_TRAIN_LEVEL
+0x05B	BYTE	T/B_TRAIN_LEVEL
+...
+0x088	INT	T/F_COMBAT_M1_SCORE
+0x08C	INT	T/F_COMBAT_M2_SCORE
+...
+0x0A4	INT	T/F_COMBAT_M8_SCORE
+0x0A8	INT	T/I_COMBAT_M1_SCORE
+...
+0x208	BOOL	T/F_COMBAT_M1_COMPLETE
+0x209	BOOL	T/F_COMBAT_M2_COMPLETE
+...
+0x210	BOOL	T/I_COMBAT_M1_COMPLETE
+...
+0x269	BYTE	BATTLE1_STATUS
+0x26A	BYTE	BATTLE2_STATUS
+...
+0x27C	BYTE	BATTLE20_STATUS
+0x27D	BYTE	BATTLE1_LAST_MISSION
+0x27E	BYTE	BATTLE2_LAST_MISSION
+...
+0x391	BYTE	BATTLE1_SEC_OBJECTIVES
+0x392	BYTE	BATTLE2_SEC_OBJECTIVES
+...
+0x3A5	BYTE	BATTLE1_BON_OBJECTIVES
+0x3A6	BYTE	BATTLE2_BON_OBJECTIVES
+...
+0x3DA	INT	BATTLE1_MISSION1_SCORE
+0x3DE	INT	BATTLE1_MISSION2_SCORE
+...
+0x3FA	INT	BATTLE2_MISSION1_SCORE
+...
+0x656	INT	BATTLE20_MISSION8_SCORE
+0x65A	SHORT	TOTAL_KILLS
+0x65C	SHORT	TOTAL_CAPTURES
+0x660	SHORT	X-WING_KILLS
+0x662	SHORT	Y-WING_KILLS
+...
+0x6E8	SHORT	FAC/1_KILLS
+0x774	INT	LASERS_FIRED
+0x778	INT	LASERS_HIT
+0x780	SHORT	WARHEADS_FIRED
+0x782	SHORT	WARHEADS_HIT
+0x786	SHORT	CRAFT_LOST
+0x788	BACKUP
+...
+
+=====
+TFR Details
+
+The first few values are nothing more than current status values for the PILOT
+profile.  The full listing of values is displayed in the Listings section.
+
+The SCORE value is the total score for the pilot, the SKILL_SCORE that follows
+depends on difficulty settings, bonus goal completions, etc.  This value is
+more or less for reference, it is already factored into the total SCORE.  The
+SECRET_ORDER value is another PILOT variable and determines which tatoo is
+displayed on your arm.
+
+The TRAIN_SCORE values should be self-explanatory, but there is the item of the
+UNUSED entries.  TIE95 has the capability to host 12 player craft types, but
+only makes use of seven.  Mods can add craft to these slots, in which case
+these values will be of importance.
+
+TRAIN_LEVEL defaults to 02, and determines how much crap is in the training
+loop when flown, or rather how much crap you put with until you ran out of
+time.
+
+The next section similarly is regarding the Combat Simulator.  Eight missions
+for each of the 12 craft slots, SCORE and a boolean COMPLETE section following.
+
+Alright, the BATTLE section.  BATTLE_STATUS controls how it is displayed (if at
+all) in the Battle Selection Concourse and the Combat Chamber.  LAST_MISSION is
+simply that, the mission number of the last mission flown.  Both OBJECTIVE
+fields are actually bit-fields.  Completing the secondary/bonus goals in
+mission one is 01 (b00000001), in both M1 and M3 is 05 (b00000101), every
+mission except M6 is DF (b11011111), etc.  After that is the individual mission
+scores.
+
+After that we get to some statistics.  Total kill count of all craft types, not
+sure how it scores CAPTURES, but that's what it is.  Craft kills, but only up
+the Factory.  Note, this means that TOTAL_KILLS will *not* match the total of
+the kill stats, since mines and whatnot are not included in those stats.
+Lasers/warheads fired and missed, that gets you accuracy figures, craft lost is
+how many times you blew yourself up.
+
+The BACKUP section is a save-state of the entire file before the last mission
+flown.  So after flying M1, the stats will still read zero.  After M3, the
+backup stats will show up to M2, etc.
+
+There you have it, a TIE95 pilot file.
+
+=====
+TFR Listings
+
+PILOT_STATUS
+00	ALIVE
+01	CAPTURED
+02	KILLED
+
+PILOT_RANK
+00	FLIGHT_CADET
+01	FLIGHT_OFFICER
+02	LIEUTENANT
+03	CAPTAIN
+04	COMMANDER
+05	GENERAL
+
+PILOT_DIFFICULTY
+00	EASY
+01	MEDIUM
+02	HARD
+
+SECRET_ORDER
+00	NONE
+01	1ST_INITIATE
+02	2ND_CIRCLE
+03	3RD_CIRCLE
+04	4TH_CIRCLE
+05	INNER_CIRCLE
+06	EMPERORS_HAND
+
+BATTLE_STATUS
+00	NOT_DISPLAYED
+01	IN_PROGRESS
+02	INCOMPLETE
+03	COMPLETED

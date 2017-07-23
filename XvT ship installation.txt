@@ -1,0 +1,11 @@
+XvT
+
+-=to be done by line, can't patch=-
+FRONTTXT.TXT - holds lots of strings, including Full ship name and Abbrv
+STRINGS.TXT - tons of strings, "m:*shipname*" and plural form
+SPECDESC.TXT - Tech lab
+frontres\FRNTSPEC.LST - *.opt list with slot numbers
+ivfiles\SPEC****.LST - *.opt list
+
+-=Patch=-
+Z_XVT__.exe - use .114 extension
